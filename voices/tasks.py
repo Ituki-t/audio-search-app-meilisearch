@@ -1,8 +1,8 @@
 from celery import shared_task
 from django.db import transaction
 from .models import Voice
-from .whisper_client import get_whisper_model
-from .es_client import get_es
+
+from .whisper_service import transcribe_audio_file
 from .es_service import index_voice
 
 import logging
@@ -19,15 +19,7 @@ def transcribe_voice(voice_id):
     voice.transcribe_status = "running"
     voice.save(update_fields=['transcribe_status'])
 
-    model = get_whisper_model()
-
-    result = model.transcribe(
-        voice.audio_file.path,
-        language="ja",
-        fp16=False,
-    )
-    text = (result["text"] or "").strip()
-
+    text = transcribe_audio_file(voice.audio_file.path)
     index_voice(voice, text)
 
     voice.transcribe_status = "done"
