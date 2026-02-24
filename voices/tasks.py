@@ -1,9 +1,8 @@
 from celery import shared_task
-from django.db import transaction
 from .models import Voice
 
 from .whisper_service import transcribe_audio_file
-from .es_service import index_voice
+from .meili_service import add_audio_documents
 
 import logging
 logger = logging.getLogger(__name__)
@@ -20,7 +19,7 @@ def transcribe_voice(voice_id):
     voice.save(update_fields=['transcribe_status'])
 
     text = transcribe_audio_file(voice.audio_file.path)
-    index_voice(voice, text)
+    add_audio_documents(voice, text)
 
     voice.transcribe_status = "done"
     voice.save(update_fields=['transcribe_status'])
