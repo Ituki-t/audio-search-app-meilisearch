@@ -18,9 +18,10 @@ def transcribe_voice(voice_id):
     voice.transcribe_status = "running"
     voice.save(update_fields=['transcribe_status'])
 
-    text = transcribe_audio_file(voice.audio_file.path)
-    add_audio_documents(voice, text)
+    segments = transcribe_audio_file(voice.audio_file.path)
+    for segment in segments:
+        add_audio_documents(voice, segment)
 
     voice.transcribe_status = "done"
     voice.save(update_fields=['transcribe_status'])
-    return text
+    return segments

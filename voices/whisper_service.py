@@ -8,5 +8,14 @@ def transcribe_audio_file(path):
         language="ja",
         fp16=False,
     )
-    text = (result.get("text") or "").strip()
-    return text
+    return get_audio_segments(result)
+
+def get_audio_segments(result):
+    segments = []
+    for segment in result.get("segments", []):
+        segments.append({
+            "start": segment["start"],
+            "end": segment["end"],
+            "text": segment["text"],
+        })
+    return segments

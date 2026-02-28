@@ -1,19 +1,22 @@
 from .meili_client import get_meili
 import os
-
 import dotenv
 dotenv.load_dotenv()
 
-audio_index = os.getenv('MEILI_INDEX', 'audio_index')
+audio_index = os.getenv('MEILI_AUDIO_INDEX', 'audio_index')
 
-
-def add_audio_documents(voice, text):
+def add_audio_documents(voice, segment):
     meili = get_meili()
-    meili.index(audio_index).add_documents([{
+    doc_id = f"{voice.id}_{int(segment['start']*1000)}"
+    docs = [{
+        'id': doc_id,
         'title': voice.title,
-        'text': text,
+        'text': segment['text'],
+        'start': segment['start'],
+        'end': segment['end'],
         'voice_id': voice.id
-    }])
+    }]
+    meili.index(audio_index).add_documents(docs)
 
 def search_audio_ids(query):
     meili = get_meili()
