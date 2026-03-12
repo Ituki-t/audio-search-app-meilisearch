@@ -1,7 +1,9 @@
 from celery import shared_task
 from .models import Voice
+from .models import Segment
 
 from .whisper_service import transcribe_audio_file
+from .whisper_service import save_whisper_segment
 from .meili_service import add_audio_documents
 
 import logging
@@ -21,6 +23,7 @@ def transcribe_voice(voice_id):
     segments = transcribe_audio_file(voice.audio_file.path)
     for segment in segments:
         add_audio_documents(voice, segment)
+        save_whisper_segment(voice, segment)
 
     voice.transcribe_status = "done"
     voice.save(update_fields=['transcribe_status'])
