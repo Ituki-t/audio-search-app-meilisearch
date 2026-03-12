@@ -12,3 +12,13 @@ class Voice(models.Model):
         )
     def __str__(self):
         return self.title
+
+
+class Segment(models.Model):
+    voice = models.ForeignKey(Voice, on_delete=models.CASCADE, related_name='segments')
+    start_time = models.FloatField()
+    end_time = models.FloatField()
+    text = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.voice.title} [{self.start_time:.2f} - {self.end_time:.2f}]"
