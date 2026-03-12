@@ -4,6 +4,13 @@
 ## This projects about
 - Meilisearchを用いて音声ファイルをtext化してファイル内容から音声ファイルを検索する
 
+## Recreate meilisearch's index
+```python
+# shell
+from voices.meili_service import recreate_index
+recreate_index()
+```
+
 ## refarence
 - ChatGPT
 - [https://docs.djangoproject.com/ja/6.0/topics/files/](https://docs.djangoproject.com/ja/6.0/topics/files/)(2026/02/12)
