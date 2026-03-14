@@ -14,12 +14,17 @@
                 <p class="card-text">Title : </p>
                 <h5 class="card-title">{{ voice.title }}</h5>
                 <p class="card-text">text : </p>
-                {% for segment in segments %}
-                    <p class="card-text">{{ segment.text }}</p>
-                {% endfor %}
+                <div class="card mb-2">
+                    <div class="card-body">
+                        {% for segment in segments %}
+                            <p class="card-text">{{ segment.text }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <a href ="{% url 'voices:download' voice.id %}" class="btn btn-primary">このファイルをダウンロード</a>
             </div>
             <div class="card-footer">
-                Updated at : {{ voice.updated_at }}
+                Uploaded at : {{ voice.uploaded_at }}
             </div>
         </div>
         <hr>
