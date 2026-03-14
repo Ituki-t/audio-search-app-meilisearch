@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ voice.title}}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="card mb-3">
+            <div class="card-header">
+                ID : {{ voice.id }}
+            </div>
+            <div class="card-body">
+                <p class="card-text">Title : </p>
+                <h5 class="card-title">{{ voice.title }}</h5>
+                <p class="card-text">text : </p>
+                <!-- <p class="card-text">{{ voice.segments.text  }}</p> -->
+            </div>
+            <div class="card-footer">
+                Updated at : {{ voice.updated_at }}
+            </div>
+        </div>
+        <hr>
+
+    </div>
+
+
+{% endblock content %}

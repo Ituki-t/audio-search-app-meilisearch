@@ -53,3 +53,11 @@ def delete(request, voice_id):
         return redirect('voices:index')
     else:
         return render(request, 'voices/confirm_delete.html', {'voice_id': voice_id})
+
+
+def detail(request, voice_id):
+    voice = get_object_or_404(Voice, pk=voice_id)
+    context = {
+        'voice': voice,
+    }
+    return render(request, 'voices/detail.html', context)

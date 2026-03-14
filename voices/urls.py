@@ -9,5 +9,6 @@ urlpatterns = [
     path('download/<int:voice_id>/', views.download, name='download'),
     # path('voice/<int:voice_id>/', views.voice_detail, name='voice_detail'),
     path('<int:voice_id>/delete/', views.delete, name='delete'),
+    path('<int:voice_id>/', views.detail, name='detail'),
 
 ]
