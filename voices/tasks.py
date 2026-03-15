@@ -28,3 +28,8 @@ def transcribe_voice(voice_id):
     voice.transcribe_status = "done"
     voice.save(update_fields=['transcribe_status'])
     return segments
+
+@shared_task
+def update_audio_document(segment_id):
+    segment = Segment.objects.get(id=segment_id)
+    add_audio_documents(segment)

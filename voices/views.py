@@ -9,6 +9,7 @@ from .models import Segment
 from .forms import UploadVoiceForm
 from .forms import UpdateSegmentTextForm
 from .tasks import transcribe_voice
+from .tasks import update_audio_document
 from .meili_service import search_audio_ids
 
 # Create your views here.
@@ -74,6 +75,7 @@ def update_segment_text(request, voice_id, segment_id):
         form = UpdateSegmentTextForm(request.POST, instance=segment)
         if form.is_valid():
             form.save()
+            update_audio_document.delay(segment.id)
             return redirect('voices:detail', voice_id=voice_id)
     else:
         form = UpdateSegmentTextForm(instance=segment)
